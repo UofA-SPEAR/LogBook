@@ -4,5 +4,5 @@ This folder is a logbook for the SPEAR software team. Each log file describes wh
 
 ## TO RUN:
 In terminal run: 'lb'
-Type your log into the file opened in vim
-Save and exit
+- Type your log entry into the file opened by vim
+- Save and exit (TYPE ":wq")
