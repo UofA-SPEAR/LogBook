@@ -7,14 +7,20 @@ function lb () {
   cd ~/Desktop/LogBook
   
   vim ~/Desktop/LogBook/$file
-
   [ $? -eq 0 ] || (echo vim failure && return);
+  #[ -f ~/Desktop/LogBook/$file ] && chmod 0444 ~/Desktop/LogBook/$file
+
+  echo git pull...  
+  git pull
   
   git add ~/Desktop/LogBook/$file
-  [ $? -eq 0 ] || (echo "add failed $(?)" && return);
-  
+  [ $? -eq 0 ] || (echo "add failed" && return);
+
+  read -p "Name: " name
+  read -p "Email " email
+
   while [ $flag -eq 0 ]; do
-    git commit -m "update $(date '+%c')";
+    git commit -m "update $(date '+%c')" -a --author="${name} <$email>";
     if [ $? -eq 0 ]; then flag=1;
     else
       while true; do
@@ -22,12 +28,11 @@ function lb () {
 
         read -p "Or you can exit, by typing q: " resp;
         case $resp in 
-          [qQ] ) return;;
+          [qQ] ) git checkout ~/Desktop/LogBook/$file; return;;
           * ) break;;
         esac
       done
     fi;
   done
-  git pull
   git push origin master;
   }
